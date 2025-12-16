@@ -6,7 +6,7 @@ void setup() {
 
 void loop() {
   digitalWrite(EXT_LED_PIN, HIGH);  // LED ON
-  delay(2000);
+  delay(500);
   digitalWrite(EXT_LED_PIN, LOW);   // LED OFF
-  delay(2000);
+  delay(500);
 }
