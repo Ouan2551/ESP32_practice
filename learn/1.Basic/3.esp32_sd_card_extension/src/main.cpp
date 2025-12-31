@@ -1,52 +1,124 @@
-/*
- * This ESP32 code is created by esp32io.com
- *
- * This ESP32 code is released in the public domain
- *
- * For more detail (instruction and wiring diagram), visit https://esp32io.com/tutorials/esp32-sd-card
- */
+// #include <Arduino.h>
+// #include <SD.h>
 
+// #define PIN_SPI_CS 5
+
+// File myFile;
+// // 'File' is a class provided by the Arduino SD library
+// // 'myFile' is a variable of type 'File'
+
+// void setup()
+// {
+//     Serial.begin(9600);
+//     bool SD_ready = SD.begin(PIN_SPI_CS);
+//     if (SD_ready == false)
+//     {
+//         Serial.println("SD card not detected.");
+//         while(true)
+//         {
+//             delay(1000);
+//         }
+//     }
+//     Serial.println("SD card initialized.");
+
+//     // _______________________________________________
+
+//     // open file for writing
+//     myFile = SD.open("/esp32.txt", FILE_WRITE);
+
+//     if(myFile)
+//     {
+//         myFile.println("Surprise my friend.");
+//         myFile.close();
+//     }
+//     else
+//     {
+//         Serial.println("SD card: Issue to write to data.");
+//     }
+    
+//     // open file to reading
+//     myFile = SD.open("/esp32.txt", FILE_READ);
+//     if (myFile == false)
+//     {
+//         while(true)
+//         {
+//         Serial.println("Error to read the file txt.");
+//         delay(1000);
+//         }
+//     }
+
+//     Serial.println("File content.");
+//     while(myFile.available() > 0)
+//     {
+//         char character = myFile.read();
+//         Serial.print(character);
+//     }
+//     myFile.close();
+// }
+// void loop()
+// {
+
+// }
+
+// ___________________________________________________________________________
+
+// Write variable to SD Card
+#include <Arduino.h>
 #include <SD.h>
+#define PIN_SPI_CS 5
 
-#define PIN_SPI_CS 5 // The ESP32 pin GPIO5
+File myfile;
+int Integer = -52;
+float Float = -12.7;
+String string = "My name is ";
+char Char[] = "Nannaphat";
+byte byte_array[] = {1, 2, 3, 4, 5};
 
-File myFile;
-
-void setup() {
+void setup()
+{
   Serial.begin(9600);
 
-  if (!SD.begin(PIN_SPI_CS)) {
-    while (1) {
-      Serial.println(F("SD CARD FAILED, OR NOT PRESENT!"));
+  bool sd_ready = SD.begin(PIN_SPI_CS);
+  if (sd_ready == false)
+  {
+    while(true)
+    {
+      Serial.println("False to read SD card.");
+      delay(1000);
+    }
+  }
+  Serial.println("Successful to read SD card.");
+
+  // writing the data
+  myfile = SD.open("/esp32.txt", FILE_WRITE);
+  if (myfile)
+  {
+    myfile.print(Integer); myfile.print(Float); myfile.print(string); myfile.print(Char);
+    myfile.write(byte_array, 5);
+  }
+  myfile.close();
+
+  // reading the data
+  myfile = SD.open("/esp32.txt", FILE_READ);
+  if (myfile == false)
+  {
+    while(true)
+    {
+      Serial.println("Error to read the file txt.");
       delay(1000);
     }
   }
 
-  Serial.println(F("SD CARD INITIALIZED."));
-
-  // open file for writing
-  myFile = SD.open("/esp32.txt", FILE_WRITE);
-
-  if (myFile) {
-    myFile.println("Created by esp32io.com"); // write a line to esp32.txt
-    myFile.println("Learn ESP32 and SD Card"); // write another line to esp32.txt
-    myFile.close();
-  } else {
-    Serial.print(F("SD Card: Issue encountered while attempting to open the file esp32.txt"));
+  Serial.println("File content.");
+  while(myfile.available() > 0)
+  {
+    char character = myfile.read();
+    Serial.println(character);
   }
-
-  // open file for reading
-  myFile = SD.open("/esp32.txt", FILE_READ);
-  if (myFile) {
-    while (myFile.available()) {
-      char ch = myFile.read(); // read characters one by one from Micro SD Card
-      Serial.print(ch); // print the character to Serial Monitor
-    }
-    myFile.close();
-  } else {
-    Serial.print(F("SD Card: Issue encountered while attempting to open the file esp32.txt"));
-  }
+  myfile.close();
 }
 
-void loop() {
+void loop()
+{
+
 }
