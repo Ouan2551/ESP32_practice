@@ -28,10 +28,10 @@ void setup()
   // OUTPUT general text
   display.setTextSize(1); // 1 is smallest number
   display.setTextColor(WHITE);
-  display.setCursor(0, 28);
+  display.setCursor(0, 28); //  tell the display where to start writing at (x, y) position
   display.println("Hello World");
   display.display(); // push RAM into OLED
-  delay(2000);
+  delay(5000);
   display.clearDisplay(); //clear ram only not clear display
   display.display(); //after clear ram we just display blank screen
 
@@ -41,9 +41,22 @@ void setup()
   display.setCursor(0, 28);
   display.println("Hello World");
   display.display();
-  delay(2000);
+  delay(5000);
   display.clearDisplay();
   display.display();
+
+  // OUTPUT Number
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0,28);
+  display.println(1234567890);
+  display.display();
+  delay(5000);
+  display.clearDisplay();
+  display.display();
+
+
+
 }
 void loop()
 {
